@@ -1,11 +1,18 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import { TodoReducer } from "./Reducers/TodoReducer";
 
-const reducers = combineReducers({});
-const initialstate = {};
+const middleware = [thunk]; // Wrap thunk in an array
+const reducers = combineReducers({
+  Todo: TodoReducer,
+});
+const initialState = {}; // Corrected variable name
 
-export const store = createStore(
+const store = createStore(
   reducers,
-  initialstate,
-  applyMiddleware(thunk)
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware)) // Spread the middleware array
 );
+
+export default store;
